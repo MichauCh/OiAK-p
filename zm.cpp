@@ -35,16 +35,44 @@ smNum add(smNum x, smNum y){
 		s.module_val = x.module_val + y.module_val;
 	}
 	else{ //znaki niezgodne
-		if(x.module_val >= y.module_val)
+		if(x.module_val >= y.module_val){
+			s.sign = x.sign;
 			s.module_val = x.module_val - y.module_val;
+		}
 		else
-		{
+		{	
+			s.sign = y.sign;
 			s.module_val = y.module_val - x.module_val;
 		}
 	}
 	return s;
 }
-smNum sub(smNum x, smNum y){}
+smNum sub(smNum x, smNum y){
+	smNum r;
+	if(x.sign == y.sign){ //znaki zgodne
+		if(x.module_val >= y.module_val){
+			r.sign = x.sign;
+			r.module_val = x.module_val - y.module_val;
+		}
+		else
+		{	
+			r.sign = !(x.sign);
+			r.module_val = y.module_val - x.module_val;
+		}
+	}
+	else{ //znaki niezgodne
+		r.sign = x.sign;
+		if(x.sign == 0){
+			r.module_val = x.module_val + y.module_val;
+		}
+		else
+		{	
+			r.module_val = x.module_val + y.module_val;
+		}
+	}
+	return r;
+
+}
 smNum mul(smNum x, smNum y){}
 
 int main()
@@ -65,15 +93,24 @@ int main()
 	c.module_repr = c_val;
 	c.module_val = c.module_repr.to_ulong();
 
-	smNum s1, s2, s3;
+	smNum s1, s2, s3, r1, r2, r3;
 
 	s1 = add(a,b);
 	s2 = add(a,c);
 	s3 = add(b,c);
 
+	r1 = sub(a,b);
+	r2 = sub(a,c);
+	r3 = sub(b,c);
+
+	std::cout<<"---------------dodawanie---------------\n";
 	std::cout<<"w 10 to "<< s1.toString_decimal()<<"\n";
 	std::cout<<"w 10 to "<< s2.toString_decimal()<<"\n";
 	std::cout<<"w 10 to "<< s3.toString_decimal()<<"\n";
+	std::cout<<"---------------odejmowanie-------------\n";
+	std::cout<<"w 10 to "<< r1.toString_decimal()<<"\n";
+	std::cout<<"w 10 to "<< r2.toString_decimal()<<"\n";
+	std::cout<<"w 10 to "<< r3.toString_decimal()<<"\n";
 
 	return 0;
 }
