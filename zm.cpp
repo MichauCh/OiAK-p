@@ -1,17 +1,57 @@
 #include <iostream>
-#include <bitset>
+#include <vector>
 #include <string.h>
+#include <cstdint>
+
+class natural{
+	std::vector<uint32_t> module;
+
+	/* Konstruktor kopiujacy */
+	natural(const natural &a) : module(a.module) {}
+	/* operator przypisania */
+	void operator=(const natural &x) {
+		NumberlikeArray<Blk>::operator =(x);
+	}
+};
 
 struct smNum
 {
 	bool sign;
-	std::bitset<7> module_repr;
-	unsigned long module_val;
+	std::vector<uint32_t> module;
 
+/* Konstruktor bezargumentowy */
 	smNum(){
 		sign = false;
-		module_repr.reset();
-		module_val = module_repr.to_ulong();
+		std::cout<<"Empty number \n";
+	}
+/* Konstruktor sam modul */
+	smNum(vector<int> a){
+		sign = false;
+		while (a.size() > 1 && a.back() == 0)
+		module.push_back();
+	}
+/* Konstruktor kopiujacy */
+	smNum(const smNum &b)
+        : sign(b.sign),
+          module(b.module){ }
+
+/* Konstruktor z konwersja z typu long long */
+	smNum::smNum(long long value)
+	{
+		if (value < 0) {
+			sign = true;
+			module.push_back(0);
+		} else {
+			sign = false;
+		}
+
+		while (value) {
+			module.push_back((uint32_t)(value));
+		}
+	}
+	smNum(){
+		sign = false;
+		module.push_back()
 	}
 
 	std::string toString_decimal(){
@@ -31,8 +71,10 @@ smNum add(smNum x, smNum y){
 	smNum s;
 	if(x.sign == y.sign){ //znaki zgodne
 		s.sign = x.sign;
+		//int lenght = maxVal(x.module.size(),y.module.size())
 		//dodawanie modulow
-		s.module_val = x.module_val + y.module_val;
+		//for(int i=0; i<lenght; i++)
+		//s.module[i]=x.module[i]+y.module[i]
 	}
 	else{ //znaki niezgodne
 		if(x.module_val >= y.module_val){
@@ -102,33 +144,10 @@ int main()
 	b.sign = 0;
 	c.sign = 1;
 
-	a.module_repr[0] = 1; a.module_repr[5] = 1;
-	a.module_val = a.module_repr.to_ulong();
-
-	b.module_repr.set();
-	b.module_val = b.module_repr.to_ulong();
-
-	std::bitset<7>c_val("1110111");
-	c.module_repr = c_val;
-	c.module_val = c.module_repr.to_ulong();
-
-	smNum s1, s2, s3, r1, r2, r3, m1, m2, m3, q1, q2, q3;
+	smNum s1;
 
 	s1 = add(a,b);
-	s2 = add(a,c);
-	s3 = add(b,c);
 
-	r1 = sub(a,b);
-	r2 = sub(a,c);
-	r3 = sub(b,c);
-
-	m1 = mul(a,b);
-	m2 = mul(a,c);
-	m3 = mul(b,c);
-
-	q1 = div(a,b);
-	q2 = div(a,c);
-	q3 = div(b,c);
 
 	std::cout<<"---------------dodawanie---------------\n";
 	std::cout<<"w 10 to "<< s1.toString_decimal()<<"\n";
