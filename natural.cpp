@@ -31,6 +31,29 @@ public:
             return true;
         }
     }
+    /* operator inkrementacji */
+    void operator ++() {
+        int i=0;
+        bool cIn = true;
+        for (; i < module.size() && cIn; i++) {
+            module[i]++;
+            cIn = (module[i] == 0);
+        }
+        if (cIn) {
+            module.push_back(1);
+        }
+    }
+    /* operator dekrementacji */
+    void operator --() {
+        if (module.size()==0)
+            std::cout<<"Niezainicjalizowana liczba";
+        int i=0;
+        bool bIn = true;
+        for (; bIn; i++) {
+            bIn = (module[i] == 0);
+            module[i]--;
+        }
+    }
     /* wypisywanie wartosci */
     void print() { 
     for (int i=0; i<module.size(); i++) 
