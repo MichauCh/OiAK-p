@@ -72,7 +72,7 @@ public:
         //w zasiegu dluzszego argumentu bez przeniesienia
         for (; i < longerArg->module.size(); i++)
             this->module.push_back(longerArg->module[i]); //przepisywanie
-        // Set the extra block if there's still a carry, decrease length otherwise
+        //Dodatkowy element w przypadku nadmiaru
         if (cIn)
             this->module.push_back(1);
     }
@@ -84,10 +84,7 @@ public:
 
         for (i = 0, bIn = false; i < y.module.size(); i++) {
             temp = x.module[i] - y.module[i];
-            if(temp > x.module[i]){ //sprawdzenie czy uint sie "nie przekrecil"
-                bOut = 1;
-                temp = ~temp; //odwrotnosc addytywna
-            }
+            bOut = (temp > x.module[i]); //sprawdzenie czy uint sie "nie przekrecil"
             if (bIn) {
                 bOut |= (temp == 0); // bOut | temp
                 temp--;
@@ -98,14 +95,15 @@ public:
         // dalsze pozyczki
         for (; i < x.module.size() && bIn; i++) {
             bIn = (x.module[i] == 0);
-            this->module[i] = x.module[i] - 1;
+            this->module.push_back(x.module[i] - 1);
         }
         if (bIn) {
             this->module.clear();
             std::cout<<"Wynik odejmowania ujemny\n";
-        } else
+        } 
+        else //dalsze przepisywanie odjemnej, bez zmian
             for (; i < x.module.size(); i++)
-                this->module[i] = x.module[i];
+                this->module.push_back(x.module[i]);
     }
 	natural multiply(const natural &a, const natural &b){};
 };
@@ -114,9 +112,9 @@ int main()
 {
     std::vector<uint32_t> vect;
     std::vector<uint32_t> beka;
-    vect.push_back(10); 
+    vect.push_back(1266); 
     vect.push_back(20);
-    beka.push_back(666); 
+    beka.push_back(1267); 
 	natural a(vect);
     natural b(beka);
     natural c;
