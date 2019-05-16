@@ -143,11 +143,11 @@
 			std::cout << value[i] << " ";
 		std::cout << "\n";
 	}
-	// /* usuwanie wiodacego zera */
-	// void eraseLeadingZeroIfExists() {
-	//     if(this->module.size()-1 == 0) //jesli elementem o najwyzszej wadze jest 0
-	//         this->module.pop_back; //trzeba je usunac, zaburza wykonanie porownania
-	// }
+	/* usuwanie wiodacego zera */
+	void natural::eraseLeadingZeroIfExists() {
+		if ((this->value.size() - 1) == 0) //jesli elementem o najwyzszej wadze jest 0
+			this->value.pop_back(); //trzeba je usunac, zaburza wykonanie porownania
+	}
 
 	/* operacje arytmetyczne */
 	/* dodawanie */
@@ -270,7 +270,7 @@
 			divident.print();
 			temp.value.clear(); //zwalnianie pamieci z temp
 			quotient.operator++();
-			//divident.eraseLeadingZeroIfExists();
+			divident.eraseLeadingZeroIfExists();
 		}
 		if (divident.operator==(y)) { //ostatnie porownanie
 			temp.subtract(divident, y);

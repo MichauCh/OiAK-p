@@ -2,7 +2,7 @@
 #include <vector>
 
 class natural {
-protected:
+private:
 	std::vector<uint32_t> value;
 
 public:
@@ -41,11 +41,8 @@ public:
 	bool operator <=(const natural &x);
 	/* wypisywanie wartosci */
 	void print();
-	// /* usuwanie wiodacego zera */
-	// void eraseLeadingZeroIfExists() {
-	//     if(this->module.size()-1 == 0) //jesli elementem o najwyzszej wadze jest 0
-	//         this->module.pop_back; //trzeba je usunac, zaburza wykonanie porownania
-	// }
+	/* usuwanie wiodacego zera */
+	void eraseLeadingZeroIfExists();
 
 
 	/* operacje arytmetyczne */
