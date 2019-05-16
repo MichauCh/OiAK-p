@@ -1,46 +1,42 @@
-#include <iostream>
-#include <vector>
-#include <string.h>
-#include <cstdint>
+#include "natural.cpp"
 
-class natural{
-	std::vector<uint32_t> module;
-
-	/* Konstruktor kopiujacy */
-	natural(const natural &a) : module(a.module) {}
-	/* operator przypisania */
-	void operator=(const natural &x) {
-		NumberlikeArray<Blk>::operator =(x);
-	}
-};
-
-struct smNum
+class smNum
 {
-	bool sign;
-	std::vector<uint32_t> module;
+	bool sign; //false +, true -
+	natural module; //modul reprezentowany przez liczbe naturalna
 
 /* Konstruktor bezargumentowy */
-	smNum(){
-		sign = false;
-		std::cout<<"Empty number \n";
-	}
+	smNum()
+        : sign(false),
+          module(){ }
 /* Konstruktor sam modul */
-	smNum(vector<int> a){
+	smNum(const std::vector<int> a){
 		sign = false;
 		while (a.size() > 1 && a.back() == 0)
-		module.push_back();
+		module(a);
+	}
+/* Konstruktor sam modul */
+	smNum(bool si, const std::vector<int> a){
+		sign = si;
+		while (a.size() > 1 && a.back() == 0)
+		module(a);
 	}
 /* Konstruktor kopiujacy */
 	smNum(const smNum &b)
         : sign(b.sign),
           module(b.module){ }
 
+/* Konstruktor kopiujacy */
+	smNum(const natural &n)
+        : sign(false),
+          module(n){ }
+
 /* Konstruktor z konwersja z typu long long */
 	smNum::smNum(long long value)
 	{
 		if (value < 0) {
 			sign = true;
-			module.push_back(0);
+			module(0);
 		} else {
 			sign = false;
 		}
@@ -55,7 +51,7 @@ struct smNum
 	}
 
 	std::string toString_decimal(){
-		std::string value = std::to_string(module_val);
+		std::string value = std::to_string(module);
 		if(sign==0){
 			std::string str("+ ");
 			return str  + value;
@@ -66,55 +62,54 @@ struct smNum
 		}
 	}
 };
-
-smNum add(smNum x, smNum y){
-	smNum s;
-	if(x.sign == y.sign){ //znaki zgodne
-		s.sign = x.sign;
-		//int lenght = maxVal(x.module.size(),y.module.size())
-		//dodawanie modulow
-		//for(int i=0; i<lenght; i++)
-		//s.module[i]=x.module[i]+y.module[i]
-	}
-	else{ //znaki niezgodne
-		if(x.module_val >= y.module_val){
+	/* operacje arytmetyczne */
+    /* dodawanie */
+	smNum add(smNum x, smNum y){
+		smNum s;
+		if(x.sign == y.sign){ //znaki zgodne
 			s.sign = x.sign;
-			s.module_val = x.module_val - y.module_val;
+			s.module.add(x.module,y.module);
 		}
-		else
-		{	
-			s.sign = y.sign;
-			s.module_val = y.module_val - x.module_val;
+		else{ //znaki niezgodne
+			if(x.module >= y.module){
+				s.sign = x.sign;
+				s.module.subtract(x.module,y.module);
+			}
+			else
+			{	
+				s.sign = y.sign;
+				s.module.subtract(y.module,x.module);
+			}
 		}
+		return s;
 	}
-	return s;
-}
-smNum sub(smNum x, smNum y){
-	smNum r;
-	if(x.sign == y.sign){ //znaki zgodne
-		if(x.module_val >= y.module_val){
+	/* odejmowanie */
+	smNum sub(smNum x, smNum y){
+		smNum r;
+		if(x.sign == y.sign){ //znaki zgodne
+			if(x.module_val >= y.module_val){
+				r.sign = x.sign;
+				r.module.subtract(x.module,y.module);
+			}
+			else
+			{	
+				r.sign = !(x.sign);
+				r.module.subtract(y.module,x.module);
+			}
+		}
+		else{ //znaki niezgodne
 			r.sign = x.sign;
-			r.module_val = x.module_val - y.module_val;
+			if(x.sign == 0){
+				r.module_val = x.module_val + y.module_val; //co tu nie gra
+			}
+			else
+			{	
+				r.module_val = x.module_val + y.module_val;
+			}
 		}
-		else
-		{	
-			r.sign = !(x.sign);
-			r.module_val = y.module_val - x.module_val;
-		}
-	}
-	else{ //znaki niezgodne
-		r.sign = x.sign;
-		if(x.sign == 0){
-			r.module_val = x.module_val + y.module_val;
-		}
-		else
-		{	
-			r.module_val = x.module_val + y.module_val;
-		}
-	}
-	return r;
+		return r;
 
-}
+	}
 smNum mul(smNum x, smNum y){
 	smNum m;
 	if(x.sign==y.sign)
@@ -122,7 +117,7 @@ smNum mul(smNum x, smNum y){
 	else
 		m.sign = 1;
 
-	m.module_val = x.module_val * y.module_val;
+	m.module.multiply(x,y);;
 	return m;
 }
 smNum div(smNum x, smNum y){
@@ -132,7 +127,7 @@ smNum div(smNum x, smNum y){
 	else
 		q.sign = 1;
 
-	q.module_val = x.module_val / y.module_val;
+	q.module.divide(x.module,y.module);
 	return q;
 }
 

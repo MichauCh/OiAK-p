@@ -9,11 +9,15 @@ public:
     /* Konstruktor bezargumentowy */
     natural(){
     }
-    /* Konstruktor kopiujacy */
+    /* Konstruktor kopiujacy, z uinta */
+	natural(const  uint32_t a){
+        this->module.push_back(a);
+    }
+    /* Konstruktor kopiujacy, z vectora */
 	natural(const  std::vector<uint32_t> &a){
         this->module = a;
     }
-	/* Konstruktor kopiujacy */
+	/* Konstruktor kopiujacy, z natural */
 	natural(const natural &a) : module(a.module) {}
 	/* operator przypisania */
 	void operator=(const natural &x) {
@@ -35,37 +39,79 @@ public:
     void operator ++() {
         int i=0;
         bool cIn = true;
-        for (; i < module.size() && cIn; i++) {
-            module[i]++;
-            cIn = (module[i] == 0);
+        for (; i < this->module.size() && cIn; i++) {
+            this->module[i]++;
+            cIn = (this->module[i] == 0);
         }
         if (cIn) {
-            module.push_back(1);
+            this->module.push_back(1);
         }
     }
     /* operator dekrementacji */
     void operator --() {
-        if (module.size()==0)
+        if (this->module.size()==0)
             std::cout<<"Niezainicjalizowana liczba";
         int i=0;
         bool bIn = true;
         for (; bIn; i++) {
-            bIn = (module[i] == 0);
-            module[i]--;
+            bIn = (this->module[i] == 0);
+            this->module[i]--;
+        }
+    }
+
+    /* operator porownania, wiekszy */
+    bool operator >(const natural &x) const {
+        if (this->module.size() > x.module.size())
+            return true;
+        else if(this->module.size() < x.module.size())
+            return false;
+        else{ //argumenty tej samej dlugosci
+            // porownywanie kolejnych elementow od lewej (tych o wyzszej wadze)
+            for (int i = this->module.size()-1; i >= 0; i--)
+                if (this->module[i] > x.module[i])
+                    return true;
+            return false;
+        }
+    }
+    /* operator porownania, wiekszy/rowny */
+    bool operator >=(const natural &x) const {
+        unsigned int counter=0; //licznik rownych elementow
+        if (this->module.size() > x.module.size())
+            return true;
+        else if(this->module.size() < x.module.size())
+            return false;
+        else{ //argumenty tej samej dlugosci
+            // sprawdzenie czy jest wiekszy
+            for (unsigned int i = this->module.size()-1; i >= 0; i--){
+                if (this->module[i] > x.module[i])
+                    return true;
+                else if(this->module[i] == x.module[i]) //sprawdzenie czy rowne
+                    counter++;
+            }
+            if(counter == this->module.size()) //wszystkie elementy sa rowne
+                return true;
+            else
+                return false;
         }
     }
     /* wypisywanie wartosci */
     void print() { 
-    for (int i=0; i<module.size(); i++) 
+    for (int i=module.size()-1; i>=0; i--) 
        std::cout << module[i] << " ";
     std::cout<<"\n";
     }
+    // /* usuwanie wiodacego zera */
+    // void eraseLeadingZeroIfExists() {
+    //     if(this->module.size()-1 == 0) //jesli elementem o najwyzszej wadze jest 0
+    //         this->module.pop_back; //trzeba je usunac, zaburza wykonanie porownania
+    // }
+
     /* operacje arytmetyczne */
     /* dodawanie */
     void add(const natural &x, const natural &y) {
         bool cIn, cOut; //przeniesienia na konkretnych pozycjach
         uint32_t temp; //przechowywanie sumy
-        int i; //indeksowanie
+        int i=0; //indeksowanie
 
         const natural *shorterArg, *longerArg; //zmienne na krotszy i dluzszy argument
         if (x.module.size() >= y.module.size()) { //rownej dlugosci lub x dluzszy od y
@@ -76,7 +122,7 @@ public:
             shorterArg = &x;
         }
         // dla kazdego elementu w zasiegu krotszego argumentu
-        for (i = 0, cIn = false; i < shorterArg->module.size(); i++) {
+        for (cIn = false; i < shorterArg->module.size(); i++) {
             temp = longerArg->module[i] + shorterArg->module[i];
             cOut = (temp < longerArg->module[i]); //sprawdzenie czy uint sie "nie przekrecil"
             if (cIn) {
@@ -103,9 +149,9 @@ public:
     void subtract(const natural &x, const natural &y) {
         bool bIn, bOut; //pozyczki na konkretnych pozycjach
         uint32_t temp; //przechowywanie roznicy
-        int i; //indeksowanie
+        int i=0; //indeksowanie
 
-        for (i = 0, bIn = false; i < y.module.size(); i++) {
+        for (bIn = false; i < y.module.size(); i++) {
             temp = x.module[i] - y.module[i];
             bOut = (temp > x.module[i]); //sprawdzenie czy uint sie "nie przekrecil"
             if (bIn) {
@@ -128,27 +174,90 @@ public:
             for (; i < x.module.size(); i++)
                 this->module.push_back(x.module[i]);
     }
-	natural multiply(const natural &a, const natural &b){};
+    /* mnozenie */
+    void multiply(const natural &x, const natural &y){
+        int cIn = 0;
+        int cOut = 0;
+        uint32_t temp=0;
+        std::vector<uint32_t> tempMod;
+        natural tempVec;
+        natural tempNat;
+        int longerArg = 0;
+        if(x.module.size()>=y.module.size())
+            longerArg = x.module.size();
+        else longerArg = y.module.size();
+ 
+       unsigned long long longtemp;
+       for (int i = 0; i<x.module.size(); i++) {
+                for(int k = 0; k<i ;k++) {
+                    tempVec.module.insert(tempVec.module.begin(), 0);
+                    }
+            for (int j = 0; j<y.module.size(); j++) {
+                longtemp = x.module[i] * y.module[j] + cIn;
+                temp = longtemp;
+                tempVec.module.insert(tempVec.module.begin()+i+j, temp);
+                if (temp == longtemp) {
+                    cIn = 0;
+                    } else {
+                   cIn = longtemp/4294967295;
+                    }
+                    temp = 0;
+ 
+            }
+            tempMod = this->module;
+            tempNat.module=tempMod;
+            this->module.clear();
+            this->add(tempNat, tempVec);
+            tempVec.module.clear();
+            tempMod.clear();
+        }
+    }
+ 
+ // prymitywny algorytm dzielenia
+    void divide(const natural &x, const natural &y) {
+        natural divident(x); //kopia do dzialan dzielnej
+        natural quotient(0); //przechowywanie ilorazu, quotient
+        natural temp;
+
+        while(divident.operator>(y)){ //powinno byc >= ale samo > to mniej operacji
+            temp.subtract(divident, y);
+            divident.module = temp.module; //kopiowanie wartosci
+            divident.print();
+            temp.module.clear(); //zwalnianie pamieci z temp
+            quotient.operator++();
+            //divident.eraseLeadingZeroIfExists();
+        }
+        if(divident.operator==(y)){ //ostatnie porownanie
+            temp.subtract(divident, y);
+            divident.module = temp.module; //kopiowanie wartosci
+            temp.module.clear(); //zwalnianie pamieci z temp
+            quotient.operator++();
+        }
+        this->module = quotient.module;
+        temp.module.clear(); //zwalnianie pamieci z temp
+        divident.module.clear();
+    }
+
+
 };
 
 int main()
 {
     std::vector<uint32_t> vect;
-    std::vector<uint32_t> beka;
-    vect.push_back(1266); 
-    vect.push_back(20);
-    beka.push_back(1267); 
-	natural a(vect);
-    natural b(beka);
-    natural c;
-    c.subtract(a,b);
+    std::vector<uint32_t> vect2;
+    vect.push_back(55); 
+    vect.push_back(1);
+    vect2.push_back(16); 
+    vect2.push_back(1);
+    natural a(vect);
+    natural b(vect2);
+    natural c,d;
+    //c.divide(a,b);
+    d.multiply(a,b);
+    d.print();
 
-    a.print();
-    b.print();
-	c.print();
-    if(a == b){
-        std::cout<<"rowne \n";
-    }
+    if(a >= b)
+        std::cout<<"a >= b\n";
 
 	return 0;
 }
