@@ -269,9 +269,3 @@
 
 		this->module.divide(x.module, y.module);
 	}
-
-int main()
-{
-	smNum a, b, c;
-	return 0;
-}
