@@ -10,8 +10,4 @@ int main(int argc, char* argv[])
 {
 	::testing::InitGoogleTest(&argc, argv);
   	return RUN_ALL_TESTS();
-
-	smNum a, b, c;
-	std::cout<<"Hellooooo from meeeeeee odersaaaaaaaaaaaaaaaaajd\n";
-	return 0;
 }
