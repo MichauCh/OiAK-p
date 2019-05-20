@@ -263,7 +263,7 @@
 
 		unsigned long long longtemp;
 		for (unsigned i = 0; i < x.value.size(); i++) {
-			for (int k = 0; k < i; k++) {
+			for (unsigned k = 0; k < i; k++) {
 				tempVec.value.insert(tempVec.value.begin(), 0);
 			}
 			for (unsigned j = 0; j < y.value.size(); j++) {
