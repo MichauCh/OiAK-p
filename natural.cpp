@@ -50,6 +50,17 @@
 			return true;
 		}
 	}
+	/* operator porownania do pojedynczej liczby */
+	bool natural::operator==(const unsigned &x) {
+		if (value.size() > 1)
+			return false;
+		else {
+			if(value[0] == x)
+				return true;
+			else
+				return false;			
+		}
+	}
 	/* operator inkrementacji */
 	void natural::operator++() {
 		unsigned i = 0;
@@ -64,8 +75,8 @@
 	}
 	/* operator dekrementacji */
 	void natural::operator--() {
-		if (this->value.size() == 0)
-			std::cout << "Niezainicjalizowana liczba";
+		if (this->isZero())
+			throw std::runtime_error("Dekrementacja 0 niedozwolona\n");
 		int i = 0;
 		bool bIn = true;
 		for (; bIn; i++) {
@@ -157,6 +168,17 @@
 			this->value.pop_back(); //trzeba je usunac, zaburza wykonanie porownania
 	}
 
+	bool natural::isZero(){
+		if(this->value.size() == 0)
+			return true;
+		if(this->value.size() == 1 && value[0] == 0)
+			return true;
+		for(unsigned i = 0; i < this->value.size()-1; i++){
+			if(this->value[i] != 0)
+				return false;
+		}
+		return true;	
+	}
 	/* operacje arytmetyczne */
 	/* dodawanie */
 	void natural::add(const natural &x, const natural &y) {
@@ -220,7 +242,7 @@
 		}
 		if (bIn) {
 			this->value.clear();
-			std::cout << "Wynik odejmowania ujemny\n";
+			throw std::runtime_error("Wynik odejmowania ujemny");
 		}
 		else //dalsze przepisywanie odjemnej, bez zmian
 			for (; i < x.value.size(); i++)
@@ -267,7 +289,9 @@
 	}
 
 	// prymitywny algorytm dzielenia
-	void natural::divide(const natural &x, const natural &y) {
+	void natural::divide(const natural &x, natural &y) {
+		if(y.isZero())
+			throw std::runtime_error("Dzielenie przez 0\n");
 		natural divident(x); //kopia do dzialan dzielnej
 		natural quotient(0); //przechowywanie ilorazu, quotient
 		natural temp;

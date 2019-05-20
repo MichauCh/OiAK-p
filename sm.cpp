@@ -3,7 +3,7 @@
 	/* Konstruktor bezargumentowy */
 	smNum::smNum()
 		: sign(false),
-		module() { }
+		module(0) { }
 	/* Konstruktor kopiujacy, z uinta */
 	smNum::smNum(const uint32_t a) {
 		sign = false;
@@ -64,9 +64,17 @@
 	std::vector<uint32_t> smNum::getModule() {
 		return this->module.getValue();
 	}
+	/* getter do wartosci */
+	natural smNum::getNatural() {
+		return this->module;
+	}
 	/* setter do wartosci */
 	void smNum::setModule(const std::vector<uint32_t> &a) {
 		this->module.setValue(a);
+	}
+	/* setter do wartosci */
+	void smNum::setNatural(const natural &a) {
+		this->module = a;
 	}
 
 	/* wypisywanie wartosci */
@@ -94,6 +102,23 @@
 			else
 				return false;
 	}
+	// /* operator porownania do liczby*/
+	// bool smNum::operator==(const int &x) {
+	// 	if(this->module.size() > 1)
+	// 		return false;
+	// 	if(x > 0 || this->sign == false){
+	// 		if(this->module[0]== x)
+	// 			return true;
+	// 		else
+	// 			return false;
+	// 	}
+	// 	if(x < 0 || this->sign == true){
+	// 		if(this->module[0] == x)
+	// 			return true;
+	// 		else
+	// 			return false;
+	// 	}
+	// }
 	/* operator inkrementacji */
 	void smNum::operator++() {
 		if (!sign) //dodatnie

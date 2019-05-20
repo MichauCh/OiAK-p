@@ -21,15 +21,19 @@ public:
 	smNum(const natural &n);
 	/* Konstruktor z konwersja z typu long long */
 	smNum(long long value);
-	
+
 	/* getter do znaku */
 	bool getSign();
 	/* setter do znaku */
 	void setSign(const bool si);
 	/* getter do wartosci */
 	std::vector<uint32_t> getModule();
+	/* getter do wartosci */
+	natural getNatural();
 	/* setter do wartosci */
 	void setModule(const std::vector<uint32_t> &a);
+	/* setter do wartosci */
+	void setNatural(const natural &a);
 
 	void print();
 
@@ -37,6 +41,8 @@ public:
 	void operator=(const smNum &x);
 	/* operator porownania */
 	bool operator==(const smNum &x);
+	/* operator porownania do liczby */
+	bool operator==(const int &x);
 	/* operator inkrementacji */
 	void operator ++();
 	/* operator dekrementacji */
@@ -53,7 +59,7 @@ public:
 	smNum operator+(const smNum x);
 	smNum operator-(const smNum x);
 	smNum operator*(const smNum x);
-	smNum operator/(const smNum x);
+	smNum operator/(smNum x);
 
 	/* operacje arytmetyczne */
 	//dodawanie

@@ -14,12 +14,11 @@ public:
 	natural(const std::vector<uint32_t> &a);
 	/* Konstruktor kopiujacy, z natural */
 	natural(const natural &a);
-
 	/* getter do wartosci */
 	std::vector<uint32_t> getValue();
 	/* setter do wartosci */
 	void setValue(const std::vector<uint32_t> &a);
-	
+
 	/* funkcja do dodawania elementow */
 	void push_back(const uint32_t a);
 	/* funkcja do usuwania elementow */
@@ -27,11 +26,12 @@ public:
 	/* liczba elementow */
 	unsigned size();
 
-
 	/* operator przypisania */
 	void operator=(const natural &x);
 	/* operator porownania */
 	bool operator==(const natural &x);
+	/* operator porownania do pojedynczej liczby */
+	bool operator==(const unsigned &x);
 	/* operator inkrementacji */
 	void operator ++();
 	/* operator dekrementacji */
@@ -48,7 +48,7 @@ public:
 	void print();
 	/* usuwanie wiodacego zera */
 	void eraseLeadingZeroIfExists();
-
+	bool isZero();
 
 	/* operacje arytmetyczne */
 	/* dodawanie */
@@ -58,6 +58,6 @@ public:
 	/* mnozenie */
 	void multiply(const natural &x, const natural &y);
 	// prymitywny algorytm dzielenia
-	void divide(const natural &x, const natural &y);
+	void divide(const natural &x, natural &y);
 };
 
