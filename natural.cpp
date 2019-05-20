@@ -13,6 +13,14 @@
 	/* Konstruktor kopiujacy, z natural */
 	natural::natural(const natural &a) : value(a.value) {}
 
+	/* getter do wartosci */
+	std::vector<uint32_t> natural::getValue() {
+		return value;
+	}
+	/* setter do wartosci */
+	void natural::setValue(const std::vector<uint32_t> &a) {
+		this->value = a;
+	}
 	/* Funkcja, ktora dodaje uinta32 do wartosci */
 	void natural::push_back(const uint32_t a) {
 		this->value.push_back(a);

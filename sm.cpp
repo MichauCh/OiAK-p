@@ -52,6 +52,23 @@
 		}
 	}
 
+	/* getter do znaku */
+	bool smNum::getSign() {
+		return this->sign;
+	}
+	/* setter do znaku */
+	void smNum::setSign(const bool si) {
+		this->sign = si;
+	}
+	/* getter do wartosci */
+	std::vector<uint32_t> smNum::getModule() {
+		return this->module.getValue();
+	}
+	/* setter do wartosci */
+	void smNum::setModule(const std::vector<uint32_t> &a) {
+		this->module.setValue(a);
+	}
+
 	/* wypisywanie wartosci */
 	void smNum::print() {
 		if (sign)

@@ -15,6 +15,11 @@ public:
 	/* Konstruktor kopiujacy, z natural */
 	natural(const natural &a);
 
+	/* getter do wartosci */
+	std::vector<uint32_t> getValue();
+	/* setter do wartosci */
+	void setValue(const std::vector<uint32_t> &a);
+	
 	/* funkcja do dodawania elementow */
 	void push_back(const uint32_t a);
 	/* funkcja do usuwania elementow */

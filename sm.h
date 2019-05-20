@@ -21,6 +21,15 @@ public:
 	smNum(const natural &n);
 	/* Konstruktor z konwersja z typu long long */
 	smNum(long long value);
+	
+	/* getter do znaku */
+	bool getSign();
+	/* setter do znaku */
+	void setSign(const bool si);
+	/* getter do wartosci */
+	std::vector<uint32_t> getModule();
+	/* setter do wartosci */
+	void setModule(const std::vector<uint32_t> &a);
 
 	void print();
 
