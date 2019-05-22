@@ -14,8 +14,8 @@
 	natural::natural(const natural &a) : value(a.value) {}
 
 	/* getter do wartosci */
-	std::vector<uint32_t> natural::getValue() {
-		return value;
+	std::vector<uint32_t> natural::getValue() const{
+		return this->value;
 	}
 	/* setter do wartosci */
 	void natural::setValue(const std::vector<uint32_t> &a) {
@@ -39,7 +39,7 @@
 	}
 	/* operator przypisania */
 	void natural::operator=(const natural &x) {
-		*this = x;
+		value = x.getValue();
 	}
 	/* operator porownania */
 	bool natural::operator==(const natural &x) const {
