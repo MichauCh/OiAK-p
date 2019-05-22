@@ -12,6 +12,10 @@
 	}
 	/* Konstruktor kopiujacy, z natural */
 	natural::natural(const natural &a) : value(a.value) {}
+	/*Destruktor*/
+	natural::~natural(){
+		value.clear();
+	}
 
 	/* getter do wartosci */
 	std::vector<uint32_t> natural::getValue() const{

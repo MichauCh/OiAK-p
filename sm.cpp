@@ -51,9 +51,14 @@
 			module.push_back((uint32_t)(value));
 		}
 	}
+	/* Destruktor */
+	smNum::~smNum()
+	{
+		module.~natural();
+	}
 
 	/* getter do znaku */
-	bool smNum::getSign() {
+	bool smNum::getSign() const{
 		return this->sign;
 	}
 	/* setter do znaku */
@@ -61,11 +66,11 @@
 		this->sign = si;
 	}
 	/* getter do wartosci */
-	std::vector<uint32_t> smNum::getModule() {
+	std::vector<uint32_t> smNum::getModule() const{
 		return this->module.getValue();
 	}
 	/* getter do wartosci */
-	natural smNum::getNatural() {
+	natural smNum::getNatural() const{
 		return this->module;
 	}
 	/* setter do wartosci */
@@ -78,7 +83,7 @@
 	}
 
 	/* wypisywanie wartosci */
-	void smNum::print() {
+	void smNum::print() const{
 		if (sign)
 			std::cout << "- ";
 		else
@@ -93,7 +98,7 @@
 		this->module = x.module;
 	}
 	/* operator porownania */
-	bool smNum::operator==(const smNum &x) {
+	bool smNum::operator==(const smNum &x) const{
 		if (this->sign != x.sign) //jesli znaki sa rozne false
 			return false;
 		else //porownanie wartosci
@@ -119,7 +124,7 @@
 	}
 
 	/* operator porownania, wiekszy */
-	bool smNum::operator >(const smNum &x) {
+	bool smNum::operator >(const smNum &x) const{
 		if (this->sign != x.sign) { //znaki rozne
 			if (this->sign == 0 && x.sign == 1) //x jest liczba ujemna
 				return true;
@@ -142,7 +147,7 @@
 		}
 	}
 	/* operator porownania, mniejszy */
-	bool smNum::operator <(const smNum &x) {
+	bool smNum::operator <(const smNum &x) const{
 		if (this->sign != x.sign) { //znaki rozne
 			if (this->sign == 0 && x.sign == 1) //x jest liczba ujemna
 				return false;
@@ -165,7 +170,7 @@
 		}
 	}
 	/* operator porownania, wiekszy/rowny */
-	bool smNum::operator >=(const smNum &x) {
+	bool smNum::operator >=(const smNum &x) const{
 		if (this->sign != x.sign) { //znaki rozne
 			if (this->sign == 0 && x.sign == 1) //x jest liczba ujemna
 				return true;
@@ -188,7 +193,7 @@
 		}
 	}
 	/* operator porownania, mniejszy/rowny */
-	bool smNum::operator <=(const smNum &x) {
+	bool smNum::operator <=(const smNum &x) const{
 		if (this->sign != x.sign) { //znaki rozne
 			if (this->sign == 0 && x.sign == 1) //x jest liczba ujemna
 				return false;

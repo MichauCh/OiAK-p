@@ -14,6 +14,8 @@ public:
 	natural(const std::vector<uint32_t> &a);
 	/* Konstruktor kopiujacy, z natural */
 	natural(const natural &a);
+	/*Destruktor*/
+	~natural();
 	/* getter do wartosci */
 	std::vector<uint32_t> getValue() const;
 	/* setter do wartosci */
