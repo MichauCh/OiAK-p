@@ -176,12 +176,14 @@
 	}
 
 	bool natural::isZero() const{
-		if(this->value.size() == 0)
+		if(value.empty()){
 			return true;
-		if(this->value.size() == 1 && value[0] == 0)
+		}
+		if(value.size()==1 && value[0]==0){
 			return true;
-		for(unsigned i = 0; i < this->value.size()-1; i++){
-			if(this->value[i] != 0)
+		}
+		for(unsigned i = 0; i < value.size(); i++){
+			if(value[i] != 0)
 				return false;
 		}
 		return true;	
@@ -249,13 +251,52 @@
 		}
 		if (bIn) {
 			this->value.clear();
-			throw std::runtime_error("Wynik odejmowania ujemny");
+			throw std::runtime_error("Wynik odejmowania ujemny dla liczby naturalnej");
 		}
 		else //dalsze przepisywanie odjemnej, bez zmian
 			for (; i < x.value.size(); i++)
 				this->value.push_back(x.value[i]);
 	}
 	/* mnozenie */
+	// void natural::multiply(const natural &x, const natural &y) {
+	// 	int cIn = 0;
+	// 	int cOut = 0;
+	// 	uint32_t temp = 0;
+	// 	std::vector<uint32_t> tempMod;
+	// 	natural tempVec;
+	// 	natural tempNat;
+	// 	int longerArg = 0;
+	// 	if (x.value.size() >= y.value.size())
+	// 		longerArg = x.value.size();
+	// 	else longerArg = y.value.size();
+
+	// 	unsigned long long longtemp;
+	// 	for (unsigned i = 0; i < x.value.size(); i++) {
+	// 		for (unsigned k = 0; k < i; k++) {
+	// 			tempVec.value.insert(tempVec.value.begin(), 0);
+	// 		}
+	// 		for (unsigned j = 0; j < y.value.size(); j++) {
+	// 			longtemp = x.value[i] * y.value[j] + cIn;
+	// 			temp = longtemp;
+	// 			tempVec.value.insert(tempVec.value.begin() + i + j, temp);
+	// 			if (temp == longtemp) {
+	// 				cIn = 0;
+	// 			}
+	// 			else {
+	// 				cIn = longtemp / 4294967295;
+	// 			}
+	// 			temp = 0;
+
+	// 		}
+	// 		tempMod = this->value;
+	// 		tempNat.value = tempMod;
+	// 		this->value.clear();
+	// 		this->add(tempNat, tempVec);
+	// 		tempVec.value.clear();
+	// 		tempMod.clear();
+	// 	}
+	// }
+		/* mnozenie */
 	void natural::multiply(const natural &x, const natural &y) {
 		int cIn = 0;
 		int cOut = 0;
@@ -263,27 +304,38 @@
 		std::vector<uint32_t> tempMod;
 		natural tempVec;
 		natural tempNat;
-		int longerArg = 0;
-		if (x.value.size() >= y.value.size())
+		unsigned long long longerArg = 0;
+		unsigned long long tempx = 0;
+		unsigned long long tempy = 0;
+/*		if (x.value.size() >= y.value.size())
 			longerArg = x.value.size();
 		else longerArg = y.value.size();
+		*/
 
-		unsigned long long longtemp;
+		unsigned long long longtemp = 0;
 		for (unsigned i = 0; i < x.value.size(); i++) {
 			for (unsigned k = 0; k < i; k++) {
 				tempVec.value.insert(tempVec.value.begin(), 0);
 			}
 			for (unsigned j = 0; j < y.value.size(); j++) {
-				longtemp = x.value[i] * y.value[j] + cIn;
+				cIn = cOut;
+				tempx = x.value[i];
+				tempy = y.value[j];
+				longtemp = tempx * tempy + cIn;
+				std::cout << longtemp << "     eloooo"<<std :: endl;
 				temp = longtemp;
 				tempVec.value.insert(tempVec.value.begin() + i + j, temp);
-				if (temp == longtemp) {
-					cIn = 0;
+				longerArg = temp;
+				/*if (longerArg == longtemp) {
+					cOut = 0;
 				}
 				else {
-					cIn = longtemp / 4294967295;
-				}
-				temp = 0;
+					cOut = longtemp / 4294967295;
+					std::cout << "jestem" << std::endl << std::endl;
+				}*/
+				cOut = longtemp / 4294967295;
+				std::cout << cOut << "     cOut" << std::endl;
+				//temp = 0;
 
 			}
 			tempMod = this->value;
@@ -293,10 +345,13 @@
 			tempVec.value.clear();
 			tempMod.clear();
 		}
+		if (cOut != 0)
+			this->value.push_back(cOut);
 	}
 
 	// prymitywny algorytm dzielenia
 	void natural::divide(const natural &x, const natural &y) {
+		y.print();
 		if(y.isZero())
 			throw std::runtime_error("Dzielenie przez 0\n");
 		natural divident(x); //kopia do dzialan dzielnej
@@ -306,7 +361,6 @@
 		while (divident.operator>(y)) { //powinno byc >= ale samo > to mniej operacji
 			temp.subtract(divident, y);
 			divident.value = temp.value; //kopiowanie wartosci
-			divident.print();
 			temp.value.clear(); //zwalnianie pamieci z temp
 			quotient.operator++();
 			divident.eraseLeadingZeroIfExists();
