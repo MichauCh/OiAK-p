@@ -51,12 +51,6 @@
 			module.push_back((uint32_t)(value));
 		}
 	}
-	/* Destruktor */
-	smNum::~smNum()
-	{
-		module.~natural();
-	}
-
 	/* getter do znaku */
 	bool smNum::getSign() const{
 		return this->sign;

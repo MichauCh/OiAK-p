@@ -21,8 +21,6 @@ public:
 	smNum(const natural &n);
 	/* Konstruktor z konwersja z typu long long */
 	smNum(long long value);
-	/* Destruktor */
-	~smNum();
 
 	/* getter do znaku */
 	bool getSign() const;
