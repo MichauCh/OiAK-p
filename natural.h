@@ -24,31 +24,33 @@ public:
 	/* funkcja do usuwania elementow */
 	void pop_back();
 	/* liczba elementow */
-	unsigned size();
+	unsigned size() const;
+	/* liczba bitow, potrzebnych do zapisania liczby */
+	unsigned bitSize() const;
 
 	/* operator przypisania */
-	void operator=(const natural &x);
+	void operator=(const natural &x) const;
 	/* operator porownania */
-	bool operator==(const natural &x);
+	bool operator==(const natural &x) const;
 	/* operator porownania do pojedynczej liczby */
-	bool operator==(const unsigned &x);
+	bool operator==(const unsigned &x) const;
 	/* operator inkrementacji */
 	void operator ++();
 	/* operator dekrementacji */
 	void operator --();
 	/* operator porownania, wiekszy */
-	bool operator >(const natural &x);
+	bool operator >(const natural &x) const;
 	/* operator porownania, mniejszy */
-	bool operator <(const natural &x);
+	bool operator <(const natural &x) const;
 	/* operator porownania, wiekszy/rowny */
-	bool operator >=(const natural &x);
+	bool operator >=(const natural &x) const;
 	/* operator porownania, mniejszy/rowny */
-	bool operator <=(const natural &x);
+	bool operator <=(const natural &x) const;
 	/* wypisywanie wartosci */
-	void print();
+	void print() const;
 	/* usuwanie wiodacego zera */
 	void eraseLeadingZeroIfExists();
-	bool isZero();
+	bool isZero() const;
 
 	/* operacje arytmetyczne */
 	/* dodawanie */
@@ -58,6 +60,6 @@ public:
 	/* mnozenie */
 	void multiply(const natural &x, const natural &y);
 	// prymitywny algorytm dzielenia
-	void divide(const natural &x, natural &y);
+	void divide(const natural &x, const natural &y);
 };
 

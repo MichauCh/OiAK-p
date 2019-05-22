@@ -3,7 +3,7 @@
 	/* Konstruktor bezargumentowy */
 	smNum::smNum()
 		: sign(false),
-		module(0) { }
+		module() { }
 	/* Konstruktor kopiujacy, z uinta */
 	smNum::smNum(const uint32_t a) {
 		sign = false;
@@ -102,23 +102,7 @@
 			else
 				return false;
 	}
-	// /* operator porownania do liczby*/
-	// bool smNum::operator==(const int &x) {
-	// 	if(this->module.size() > 1)
-	// 		return false;
-	// 	if(x > 0 || this->sign == false){
-	// 		if(this->module[0]== x)
-	// 			return true;
-	// 		else
-	// 			return false;
-	// 	}
-	// 	if(x < 0 || this->sign == true){
-	// 		if(this->module[0] == x)
-	// 			return true;
-	// 		else
-	// 			return false;
-	// 	}
-	// }
+
 	/* operator inkrementacji */
 	void smNum::operator++() {
 		if (!sign) //dodatnie
@@ -226,33 +210,29 @@
 			}
 		}
 	}
-	smNum smNum::operator+(smNum x) {
+	smNum smNum::operator+(const smNum &x) {
 		smNum result;
-		smNum arg(this->sign, this->module);
-		result.add(arg, x);
+		result.add(*this, x);
 		return result;
 	}
-	smNum smNum::operator-(smNum x) {
+	smNum smNum::operator-(const smNum &x) {
 		smNum result;
-		smNum arg(this->sign, this->module);
-		result.sub(arg, x);
+		result.sub(*this, x);
 		return result;
 	}
-	smNum smNum::operator*(smNum x) {
+	smNum smNum::operator*(const smNum &x) {
 		smNum result;
-		smNum arg(this->sign, this->module);
-		result.mul(arg, x);
+		result.mul(*this, x);
 		return result;
 	}
-	smNum smNum::operator/(smNum x) {
+	smNum smNum::operator/(const smNum &x) {
 		smNum result;
-		smNum arg(this->sign, this->module);
-		result.div(arg, x);
+		result.div(*this, x);
 		return result;
 	}
 /* operacje arytmetyczne */
 // dodawanie
-	void smNum::add(smNum x, smNum y) {
+	void smNum::add(const smNum &x, const smNum &y) {
 		if (x.sign == y.sign) { //znaki zgodne
 			this->sign = x.sign;
 			this->module.add(x.module, y.module);
@@ -270,7 +250,7 @@
 		}
 	}
 // odejmowanie
-	void smNum::sub(smNum x, smNum y) {
+	void smNum::sub(const smNum &x, const smNum &y) {
 		if (x.sign == y.sign) { //znaki zgodne
 			if (x.module >= y.module) {
 				this->sign = x.sign;
@@ -294,7 +274,7 @@
 		}
 	}
 // mnozenie 
-	void smNum::mul(smNum x, smNum y) {
+	void smNum::mul(const smNum &x, const smNum &y) {
 			if (x.sign == y.sign)
 				this->sign = 0;
 			else
@@ -303,7 +283,7 @@
 			this->module.multiply(x.module, y.module);
 	}
 // prymitywny algorytm dzielenia
-	void smNum::div(smNum x, smNum y) {
+	void smNum::div(const smNum &x, const smNum &y) {
 		if (x.sign == y.sign)
 			this->sign = 0;
 		else

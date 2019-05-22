@@ -34,8 +34,12 @@ public:
 	void setModule(const std::vector<uint32_t> &a);
 	/* setter do wartosci */
 	void setNatural(const natural &a);
-
+	/* liczba elementow */
+	unsigned size();
+	/* liczba bitow, potrzebnych do zapisania liczby */
+	unsigned bitSize();
 	void print();
+
 
 	/* operator przypisania */
 	void operator=(const smNum &x);
@@ -56,18 +60,18 @@ public:
 	/* operator porownania, mniejszy/rowny */
 	bool operator <=(const smNum &x);
 	/* operatory arytmetyczne */
-	smNum operator+(const smNum x);
-	smNum operator-(const smNum x);
-	smNum operator*(const smNum x);
-	smNum operator/(smNum x);
+	smNum operator+(const smNum &x);
+	smNum operator-(const smNum &x);
+	smNum operator*(const smNum &x);
+	smNum operator/(const smNum &x);
 
 	/* operacje arytmetyczne */
 	//dodawanie
-	void add(smNum x, smNum y);
+	void add(const smNum &x, const smNum &y);
 	//odejmowanie
-	void sub(smNum x, smNum y);
+	void sub(const smNum &x, const smNum &y);
 	//mnozenie
-	void mul(smNum x, smNum y);
+	void mul(const smNum &x, const smNum &y);
 	//prymitywny algorytm dzielenia
-	void div(smNum x, smNum y);
+	void div(const smNum &x, const smNum &y);
 };

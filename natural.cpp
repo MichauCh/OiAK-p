@@ -30,16 +30,19 @@
 		this->value.pop_back();
 	}
 	/* liczba elementow */
-	unsigned natural::size() {
-		return value.size();
+	unsigned natural::size() const{
+		return this->value.size();
 	}
-
+	/* liczba bitow, potrzebnych do zapisania liczby */
+	unsigned natural::bitSize() const{
+		return 32 * this->value.size();
+	}
 	/* operator przypisania */
-	void natural::operator=(const natural &x) {
-		this->value = x.value;
+	void natural::operator=(const natural &x) const {
+		*this = x;
 	}
 	/* operator porownania */
-	bool natural::operator==(const natural &x) {
+	bool natural::operator==(const natural &x) const {
 		if (value.size() != x.value.size())
 			return false;
 		else {
@@ -51,7 +54,7 @@
 		}
 	}
 	/* operator porownania do pojedynczej liczby */
-	bool natural::operator==(const unsigned &x) {
+	bool natural::operator==(const unsigned &x) const {
 		if (value.size() > 1)
 			return false;
 		else {
@@ -86,7 +89,7 @@
 	}
 
 	/* operator porownania, wiekszy */
-	bool natural::operator >(const natural &x) {
+	bool natural::operator >(const natural &x) const {
 		if (this->value.size() > x.value.size())
 			return true;
 		else if (this->value.size() < x.value.size())
@@ -100,7 +103,7 @@
 		}
 	}
 	/* operator porownania, mniejszy */
-	bool natural::operator <(const natural &x) {
+	bool natural::operator <(const natural &x) const {
 		if (this->value.size() < x.value.size())
 			return true;
 		else if (this->value.size() > x.value.size())
@@ -114,7 +117,7 @@
 		}
 	}
 	/* operator porownania, wiekszy/rowny */
-	bool natural::operator >=(const natural &x) {
+	bool natural::operator >=(const natural &x) const{
 		unsigned int counter = 0; //licznik rownych elementow
 		if (this->value.size() > x.value.size())
 			return true;
@@ -135,7 +138,7 @@
 		}
 	}
 	/* operator porownania, mniejszy/rowny */
-	bool natural::operator <=(const natural &x) {
+	bool natural::operator <=(const natural &x) const {
 		unsigned int counter = 0; //licznik rownych elementow
 		if (this->value.size() < x.value.size())
 			return true;
@@ -157,7 +160,7 @@
 	}
 
 	/* wypisywanie wartosci */
-	void natural::print() {
+	void natural::print() const{
 		for (int i = value.size() - 1; i >= 0; i--)
 			std::cout << value[i] << " ";
 		std::cout << "\n";
@@ -168,7 +171,7 @@
 			this->value.pop_back(); //trzeba je usunac, zaburza wykonanie porownania
 	}
 
-	bool natural::isZero(){
+	bool natural::isZero() const{
 		if(this->value.size() == 0)
 			return true;
 		if(this->value.size() == 1 && value[0] == 0)
@@ -289,7 +292,7 @@
 	}
 
 	// prymitywny algorytm dzielenia
-	void natural::divide(const natural &x, natural &y) {
+	void natural::divide(const natural &x, const natural &y) {
 		if(y.isZero())
 			throw std::runtime_error("Dzielenie przez 0\n");
 		natural divident(x); //kopia do dzialan dzielnej
@@ -314,25 +317,3 @@
 		temp.value.clear(); //zwalnianie pamieci z temp
 		divident.value.clear();
 	}
-
-/*
-int main()
-{
-	std::vector<uint32_t> vect;
-	std::vector<uint32_t> vect2;
-	vect.push_back(55);
-	vect.push_back(1);
-	vect2.push_back(16);
-	vect2.push_back(1);
-	natural a(vect);
-	natural b(vect2);
-	natural c, d;
-	//c.divide(a,b);
-	d.multiply(a, b);
-	d.print();
-
-	if (a >= b)
-		std::cout << "a >= b\n";
-
-	return 0;
-} */
