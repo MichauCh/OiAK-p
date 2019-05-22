@@ -38,7 +38,7 @@
 		return 32 * this->value.size();
 	}
 	/* operator przypisania */
-	void natural::operator=(const natural &x) const {
+	void natural::operator=(const natural &x) {
 		*this = x;
 	}
 	/* operator porownania */

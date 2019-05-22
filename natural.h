@@ -29,7 +29,7 @@ public:
 	unsigned bitSize() const;
 
 	/* operator przypisania */
-	void operator=(const natural &x) const;
+	void operator=(const natural &x);
 	/* operator porownania */
 	bool operator==(const natural &x) const;
 	/* operator porownania do pojedynczej liczby */

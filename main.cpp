@@ -113,9 +113,9 @@ TEST(smNumAddTest, smNumAdd1) {
 	auto a = natural({ 82931, 2136512, 12376 });
 	auto b = natural({ 192,62 });
 	auto c = natural({ 83123, 2136574, 12376 });
-	auto  a1 = smNum({ 0,a });
-	auto  b1 = smNum({ 0,b });
-	auto c1 = smNum({ 0,c });
+	auto  a1 = smNum( 0,a );
+	auto  b1 = smNum( 0,b );
+	auto c1 = smNum( 0,c );
 	smNum wynik;
 	wynik.add(a1, b1);
 	EXPECT_EQ(wynik.getModule(), c1.getModule());
@@ -125,7 +125,7 @@ TEST(smNumAddTest, smNumAdd1) {
 TEST(smNumAddTest, smNumAdd2) {
 	auto a = natural({ 27623,9152, 9124 });
 	auto b = natural({  1192, 1925});
-	auto c = natural({ 83123, 2136574, 12376 });
+	auto c = natural({ 28815, 11077, 9124});
 	auto  a1 = smNum({ 1,a });
 	auto  b1 = smNum({ 1,b });
 	auto c1 = smNum({ 1,c });
@@ -133,6 +133,59 @@ TEST(smNumAddTest, smNumAdd2) {
 	wynik.add(a1, b1);
 	EXPECT_EQ(wynik.getModule(), c1.getModule());
 	EXPECT_EQ(wynik.getSign(), c1.getSign());
+}
+//dodawanie roznych znakow
+TEST(smNumAddTest, smNumAdd3) {
+	auto a = natural({ 21367134, 12487124, 12387128 });
+	auto b = natural({ 1192, 39713847 });
+	auto c = natural({   21365942, 4267740573, 12387127 });
+	auto  a1 = smNum({ 0,a });
+	auto  b1 = smNum({ 1,b });
+	auto c1 = smNum({ 0,c });
+	smNum wynik;
+	wynik.add(a1, b1);
+	EXPECT_EQ(wynik.getModule(), c1.getModule());
+	EXPECT_EQ(wynik.getSign(), c1.getSign());
+}
+TEST(smNumAddTest, smNumAdd4) {
+	auto a = natural({ 1233453,120391,9471393 });
+	auto b = natural({ 1192, 1925123 });
+	auto c = natural({ 1232261, 4293162564, 9471392 });
+	auto  a1 = smNum({ 1,a });
+	auto  b1 = smNum({ 0,b });
+	auto c1 = smNum({ 1,c });
+	smNum wynik;
+	wynik.add(a1, b1);
+	EXPECT_EQ(wynik.getModule(), c1.getModule());
+	EXPECT_EQ(wynik.getSign(), c1.getSign());
+}
+//odejmowanie
+TEST(smNumSubTest, smNumSub1) {
+	auto a = natural({ 27623,9152, 9124 });
+	auto b = natural({ 1192, 1925 });
+	auto c = natural({ 26431, 7227, 9124});
+	auto  a1 = smNum({ 1,a });
+	auto  b1 = smNum({ 1,b });
+	auto c1 = smNum({ 1,c });
+	smNum wynik;
+	wynik.sub(a1, b1);
+	EXPECT_EQ(wynik.getModule(), c1.getModule());
+	EXPECT_EQ(wynik.getSign(), c1.getSign());
+}
+
+TEST(smNumMulTest, smNumMul1) {
+	auto a = natural({ 27623,9152, 9124 });
+	auto b = natural({ 1192, 1925 });
+	auto c = natural({ 32926616,64083459, 28493408, 17563700 });
+	auto  a1 = smNum({ 1,a });
+	auto  b1 = smNum({ 0,b });
+	auto c1 = smNum({ 1,c });
+	smNum wynik;
+	wynik.mul(a1, b1);
+	EXPECT_EQ(wynik.getModule(), c1.getModule());
+	EXPECT_EQ(wynik.getSign(), c1.getSign());
+
+
 }
 
 int main(int argc, char* argv[])
