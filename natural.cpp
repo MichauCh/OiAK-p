@@ -257,85 +257,35 @@
 			for (; i < x.value.size(); i++)
 				this->value.push_back(x.value[i]);
 	}
+
 	/* mnozenie */
-	// void natural::multiply(const natural &x, const natural &y) {
-	// 	int cIn = 0;
-	// 	int cOut = 0;
-	// 	uint32_t temp = 0;
-	// 	std::vector<uint32_t> tempMod;
-	// 	natural tempVec;
-	// 	natural tempNat;
-	// 	int longerArg = 0;
-	// 	if (x.value.size() >= y.value.size())
-	// 		longerArg = x.value.size();
-	// 	else longerArg = y.value.size();
-
-	// 	unsigned long long longtemp;
-	// 	for (unsigned i = 0; i < x.value.size(); i++) {
-	// 		for (unsigned k = 0; k < i; k++) {
-	// 			tempVec.value.insert(tempVec.value.begin(), 0);
-	// 		}
-	// 		for (unsigned j = 0; j < y.value.size(); j++) {
-	// 			longtemp = x.value[i] * y.value[j] + cIn;
-	// 			temp = longtemp;
-	// 			tempVec.value.insert(tempVec.value.begin() + i + j, temp);
-	// 			if (temp == longtemp) {
-	// 				cIn = 0;
-	// 			}
-	// 			else {
-	// 				cIn = longtemp / 4294967295;
-	// 			}
-	// 			temp = 0;
-
-	// 		}
-	// 		tempMod = this->value;
-	// 		tempNat.value = tempMod;
-	// 		this->value.clear();
-	// 		this->add(tempNat, tempVec);
-	// 		tempVec.value.clear();
-	// 		tempMod.clear();
-	// 	}
-	// }
-		/* mnozenie */
 	void natural::multiply(const natural &x, const natural &y) {
 		int cIn = 0;
-		int cOut = 0;
 		uint32_t temp = 0;
 		std::vector<uint32_t> tempMod;
 		natural tempVec;
 		natural tempNat;
-		unsigned long long longerArg = 0;
 		unsigned long long tempx = 0;
 		unsigned long long tempy = 0;
-/*		if (x.value.size() >= y.value.size())
-			longerArg = x.value.size();
-		else longerArg = y.value.size();
-		*/
 
-		unsigned long long longtemp = 0;
+		unsigned long long longtemp;
 		for (unsigned i = 0; i < x.value.size(); i++) {
 			for (unsigned k = 0; k < i; k++) {
 				tempVec.value.insert(tempVec.value.begin(), 0);
 			}
 			for (unsigned j = 0; j < y.value.size(); j++) {
-				cIn = cOut;
 				tempx = x.value[i];
 				tempy = y.value[j];
 				longtemp = tempx * tempy + cIn;
-				std::cout << longtemp << "     eloooo"<<std :: endl;
 				temp = longtemp;
 				tempVec.value.insert(tempVec.value.begin() + i + j, temp);
-				longerArg = temp;
-				/*if (longerArg == longtemp) {
-					cOut = 0;
+				if (temp == longtemp) {
+					cIn = 0;
 				}
 				else {
-					cOut = longtemp / 4294967295;
-					std::cout << "jestem" << std::endl << std::endl;
-				}*/
-				cOut = longtemp / 4294967295;
-				std::cout << cOut << "     cOut" << std::endl;
-				//temp = 0;
+					cIn = longtemp / 4294967295;
+				}
+				temp = 0;
 
 			}
 			tempMod = this->value;
@@ -345,13 +295,12 @@
 			tempVec.value.clear();
 			tempMod.clear();
 		}
-		if (cOut != 0)
-			this->value.push_back(cOut);
+		if (cIn != 0)
+			this->value.push_back(cIn);
 	}
 
 	// prymitywny algorytm dzielenia
 	void natural::divide(const natural &x, const natural &y) {
-		y.print();
 		if(y.isZero())
 			throw std::runtime_error("Dzielenie przez 0\n");
 		natural divident(x); //kopia do dzialan dzielnej
