@@ -1,5 +1,7 @@
 #include <iostream>
 #include <vector>
+#include <cstdint>
+#include <inttypes.h>
 
 class natural {
 private:

@@ -1,5 +1,5 @@
 #include "sm.h"
-#include <gtest/gtest.h>
+//#include <gtest/gtest.h>
 #include <chrono>
 class Timer {
 public:
@@ -99,7 +99,7 @@ auto b100 = natural({1836,70491,98129,34802,38726,40110,18646,18717,53419,35286,
 */
 
 
-
+/*
 //Testy operacji arytmetycznych na Natural
 TEST(NaturalAddTest, natAdd1) {
 	auto a = natural({ 17,22,11 });
@@ -467,7 +467,7 @@ TEST(SingMagnitudeTest, operatorTest4) {
 	wynik = a1-b1;
 	EXPECT_EQ(wynik.getModule(), c1.getModule());
 	EXPECT_EQ(wynik.getSign(), c1.getSign());
-}
+}*/
 
 long Add25();
 long Sub25();
@@ -543,8 +543,8 @@ int main(int argc, char* argv[])
 	std::cout<<"Div dla 200: "<<time4<<" ms\n";
 
 
-	::testing::InitGoogleTest(&argc, argv);
-  	return RUN_ALL_TESTS();
+//	::testing::InitGoogleTest(&argc, argv);
+  //	return RUN_ALL_TESTS();
 }
 auto a25 = smNum(true,{15484,24559,55207,79349,95916,96323,87430,53788,40227,50341,83791,21907,
 389,92347,67903,57646,73643,30178,47572,82451,12292,96195,70446,89476,80419});
