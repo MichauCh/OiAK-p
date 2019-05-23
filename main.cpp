@@ -400,7 +400,6 @@ TEST(NaturalTest, resultIsLessThanZero) {
 	EXPECT_THROW(c.subtract(a, b), std::runtime_error);
 }
 
-
 TEST(SingMagnitudeTest, emptyNumber2) {
 	unsigned val = 14;
 	std::vector<uint32_t> check;
@@ -420,72 +419,78 @@ TEST(SingMagnitudeTest, emptyNumber3) {
 	EXPECT_EQ(b.getModule(), check);
 }
 
+TEST(SingMagnitudeTest, operatorTest1) {
+	auto a = natural({ 82931, 2136512, 12376 });
+	auto b = natural({ 192,62 });
+	auto c = natural({ 83123, 2136574, 12376 });
+	auto  a1 = smNum( 0,a );
+	auto  b1 = smNum( 0,b );
+	auto c1 = smNum( 0,c );
+	smNum wynik;
+	wynik = a1+b1;
+	EXPECT_EQ(wynik.getModule(), c1.getModule());
+	EXPECT_EQ(wynik.getSign(), c1.getSign());
+}
+
+TEST(SingMagnitudeTest, operatorTest2) {
+	auto a = natural({ 2, 1 });
+	auto b = natural({ 4000000000, 1 });
+	auto c = natural({3705032704 , 4000000003, 1 });
+	auto  a1 = smNum({ 0,a });
+	auto  b1 = smNum({ 1,b });
+	auto c1 = smNum({ 1,c });
+	smNum wynik;
+	wynik = a1*b1;
+	EXPECT_EQ(wynik.getModule(), c1.getModule());
+	EXPECT_EQ(wynik.getSign(), c1.getSign());
+}
+TEST(SingMagnitudeTest, operatorTest3) {
+	auto a = natural({ 17 , 562 });
+	auto b = natural({ 20000000 });
+	auto c = natural({ 120688 });
+	auto a1 = smNum({ 0,a });
+	auto b1 = smNum({ 0 , b });
+	auto c1 = smNum({ 0, c });
+	smNum wynik;
+	wynik = a1/b1;
+	EXPECT_EQ(wynik.getModule(), c1.getModule() );
+	EXPECT_EQ(wynik.getSign(), c1.getSign());
+}
+TEST(SingMagnitudeTest, operatorTest4) {
+	auto a = natural({ 12678, 9351, 82643, 826});
+	auto b = natural({ 56373, 8299, 9, 1 });
+	auto c = natural({ 69051, 17650, 82652, 827 });
+	auto  a1 = smNum({ 0,a });
+	auto  b1 = smNum({ 1,b });
+	auto c1 = smNum({ 0,c });
+	smNum wynik;
+	wynik = a1-b1;
+	EXPECT_EQ(wynik.getModule(), c1.getModule());
+	EXPECT_EQ(wynik.getSign(), c1.getSign());
+}
+
+
 long Add100();
-long Add2Args();
+long Sub100();
+long Mul75();
+long Div3();
 
 int main(int argc, char* argv[])
 {
-	// auto a = natural({ 3,125 });
-	// auto b = natural(4294967295);
-	// natural wynik;
-	// wynik.divide(a, b);
-	// wynik.print();
-	// return 0;
-	::testing::InitGoogleTest(&argc, argv);
-  	return RUN_ALL_TESTS();
+	long time1, time2, time3, time4;
+	time1 = Add100();
+	std::cout<<"Czas1: "<<time1<<" ms\n";
+	time2 = Sub100();
+	std::cout<<"Czas2: "<<time2<<" ms\n";
+	time3 = Mul75();
+	std::cout<<"Czas3: "<<time3<<" ms\n";
+	time4 = Div3();
+	std::cout<<"Czas4: "<<time4<<" ms\n";
+
+	// ::testing::InitGoogleTest(&argc, argv);
+  	// return RUN_ALL_TESTS();
 }
 
-long Add2Args(){
-	auto a = natural(2455);
-	auto b = natural(6512);
-	auto a1 = smNum(1,a);
-	auto b1 = smNum(0,b);
-	smNum result;
-	Timer measured;
-	measured.Start();
-	for(unsigned i=0; i<100; i++)
-		result.add(a1,b1);
-	measured.Stop();
-	return measured.timeInMS();
-}
-long Sub2Args(){
-	auto a = natural(2455);
-	auto b = natural(6512);
-	auto a1 = smNum(1,a);
-	auto b1 = smNum(0,b);
-	smNum result;
-	Timer measured;
-	measured.Start();
-	result.sub(a1,b1);
-	measured.Stop();
-	return measured.timeInMS();
-}
-long Mul2Args(){
-	auto a = natural(2455);
-	auto b = natural(6512);
-	auto a1 = smNum(0,a);
-	auto b1 = smNum(1,b);
-	smNum result;
-	Timer measured;
-	measured.Start();
-	result.mul(a1,b1);
-	measured.Stop();
-	return measured.timeInMS();
-}
-long Div2Args(){
-	auto a = natural(2455);
-	auto b = natural(6512);
-	auto a1 = smNum(0,a);
-	auto b1 = smNum(0,b);
-	a1.print();
-	b1.print();
-	smNum result;
-	Timer measured;
-	measured.Start();
-	result.div(b1,a1);
-	measured.Stop();
-	return measured.timeInMS();
-}
 
 long Add100(){
 auto a100 = natural({16147,91582,82321,13186,55093,32049,46803,16117,44104,56564,65986,19306,8845,10390,44807,
@@ -507,7 +512,61 @@ smNum b1(1,b100);
 	smNum result;
 	Timer measured;
 	measured.Start();
-	result.div(a1,b1);
+	result.add(a1,b1);
+	measured.Stop();
+	return measured.timeInMS();
+}
+long Sub100(){
+auto a100 = natural({16147,91582,82321,13186,55093,32049,46803,16117,44104,56564,65986,19306,8845,10390,44807,
+49943,28690,55960,89887,73391,8054,91464,42563,23848,70254,46092,97175,3638,31423,49407,80510,
+83188,31120,32820,48498,70902,81986,4387,8508,28222,65066,98200,86987,39878,88161,18926,62592,
+91714,74637,16939,8908,96648,28529,53693,44237,68399,67494,2505,62057,3729,18849,32246,46555,96627,
+25107,35053,68081,12621,3104,35930,88125,67240,43573,81818,20307,15261,59564,84356,34579,1054,
+38434,73583,58141,43451,59648,37122,42125,88670,70246,82849,92980,30870,46501,84194,21262,27573,
+48191,40788,74227,63903});
+auto b100 = natural({1836,70491,98129,34802,38726,40110,18646,18717,53419,35286,55993,13147,88261,30589,27063,
+67725,24511,31448,44460,74746,91486,90783,72505,24953,42233,21335,14106,24319,5263,47021,31823,
+81138,43892,46703,32623,19715,4982,20563,39928,34051,8241,54372,19553,58699,13525,11608,84329,23570,
+49639,43055,5517,48634,11601,67394,92159,92706,58041,96244,48122,40148,98500,94521,69742,24931,
+82981,63858,26561,6786,52166,24082,53468,50211,17839,72911,33703,7300,82903,4311,98216,55162,459,
+39271,41583,81740,21532,88479,77141,45849,46915,90326,68123,22586,72516,7001,59984,60709,91930,
+71141,40301,46041});
+smNum a1(0,a100);
+smNum b1(1,b100);
+	smNum result;
+	Timer measured;
+	measured.Start();
+	result.sub(a1,b1);
+	measured.Stop();
+	return measured.timeInMS();
+}
+long Mul75(){
+auto a75 = natural({41509,73280,91601,38999,36918,50085,6969,93919,87684,48867,10378,49294,93444,3773,56518,73658,5879,28386,
+29947,94820,20977,63194,23729,72939,39145,38051,31515,41945,4550,69131,20899,95358,57711,40301,76229,35900,93209,28755,615,
+81102,21186,74175,67623,5970,62898,2665,69703,12608,83034,83908,88824,4194,81667,18160,46280,62673,80879,97917,83603,62745,
+90144,5556,22190,1925,67533,48227,70620,72934,16882,33945,8613,92248,7915,15096,88154});
+auto b75 = natural({29302,34930,21581,36781,9723,25685,33366,79522,55046,86836,32424,95056,14101,98857,71317,50979,18659,
+23642,38432,32134,49290,79390,57208,46421,62305,63235,74397,47407,84479,53672,40259,71296,24430,40665,91250,94758,18172,
+78701,38449,65491,39913,75124,55177,85239,58712,92952,49172,53168,85261,57137,46494,24097,3393,56779,84589,1272,86058,
+98809,18697,78615,75239,28001,70586,62859,23070,91542,32988,61279,10187,57321,65005,91494,39455,33069,83565});
+smNum a1(0,a75);
+smNum b1(1,b75);
+	smNum result;
+	Timer measured;
+	measured.Start();
+	result.mul(a1,b1);
+	measured.Stop();
+	return measured.timeInMS();
+}
+long Div3(){
+	auto a3 = natural({5378,4934});
+	auto b3 = natural({5241,1689});
+	auto a = natural({ 21367134, 12487124, 12387128 });
+	auto b = natural({ 1192, 39713847 });
+	natural result;
+	Timer measured;
+	measured.Start();
+	result.divide(a,b);
 	measured.Stop();
 	return measured.timeInMS();
 }
