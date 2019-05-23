@@ -171,8 +171,8 @@
 	}
 	/* usuwanie wiodacego zera */
 	void natural::eraseLeadingZeroIfExists() {
-		if ((this->value.size() - 1) == 0) //jesli elementem o najwyzszej wadze jest 0
-			this->value.pop_back(); //trzeba je usunac, zaburza wykonanie porownania
+		if (value.back() == 0) //jesli elementem o najwyzszej wadze jest 0
+			value.pop_back(); //trzeba je usunac, zaburza wykonanie porownania
 	}
 
 	bool natural::isZero() const{
@@ -358,11 +358,10 @@
 		natural quotient(0); //przechowywanie ilorazu, quotient
 		natural temp;
 
-		while (divident.operator>(y)) { //powinno byc >= ale samo > to mniej operacji
+		for(;divident.operator>(y);quotient.operator++()) { //powinno byc >= ale samo > to mniej operacji
 			temp.subtract(divident, y);
 			divident.value = temp.value; //kopiowanie wartosci
 			temp.value.clear(); //zwalnianie pamieci z temp
-			quotient.operator++();
 			divident.eraseLeadingZeroIfExists();
 		}
 		if (divident.operator==(y)) { //ostatnie porownanie
