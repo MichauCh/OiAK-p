@@ -94,15 +94,23 @@
 
 	/* operator porownania, wiekszy */
 	bool natural::operator >(const natural &x) const {
-		if (this->value.size() > x.value.size())
+		if (value.size() > x.value.size()){
 			return true;
-		else if (this->value.size() < x.value.size())
+		}
+		else if (value.size() < x.value.size())
 			return false;
 		else { //argumenty tej samej dlugosci
 			// porownywanie kolejnych elementow od lewej (tych o wyzszej wadze)
-			for (int i = this->value.size() - 1; i >= 0; i--)
-				if (this->value[i] > x.value[i])
+			for (int i = value.size() - 1; i >= 0; i--){
+				if (value[i] > x.value[i]){
 					return true;
+					}
+				else
+				{
+					if (value[i] < x.value[i])
+						return false;
+				}
+			}
 			return false;
 		}
 	}
@@ -114,8 +122,8 @@
 			return false;
 		else { //argumenty tej samej dlugosci
 			// porownywanie kolejnych elementow od lewej (tych o wyzszej wadze)
-			for (int i = this->value.size() - 1; i >= 0; i--)
-				if (this->value[i] < x.value[i])
+			for (int i = value.size() - 1; i >= 0; i--)
+				if (value[i] < x.value[i])
 					return true;
 			return false;
 		}
